@@ -1,0 +1,57 @@
+﻿[
+    {
+        "path":  "/",
+        "status":  200,
+        "content_type":  "text/html; charset=utf-8"
+    },
+    {
+        "path":  "/main.mjs",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/audio.mjs",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/palette.mjs",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/phase2.css",
+        "status":  200,
+        "content_type":  "text/css; charset=utf-8"
+    },
+    {
+        "path":  "/core.mjs",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/terrain.mjs",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/night-maps.mjs",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/game.contract.json",
+        "status":  200,
+        "content_type":  "application/json"
+    },
+    {
+        "path":  "/three.module.js",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/three.core.js",
+        "status":  200,
+        "content_type":  "text/javascript; charset=utf-8"
+    }
+]

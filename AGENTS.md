@@ -1,5 +1,17 @@
 # Đảo Đèn Lồng
 
+## Phase 2 đang triển khai
+
+- Đọc docs/requirements/phase-2.txt và docs/notes/phase-2-spec.md; ticket mới thay luật cũ khi quy định rõ.
+- Bảng chuẩn và RGB đã được người học bổ sung; xem docs/requirements/phase-2-standard.md và src/web/palette.mjs. Tuning v1.1 thay toàn bộ số tự chọn ở Phase 1.
+- src/core/night-maps.mjs và terrain.mjs dùng chung cho lõi/web; không coi test dữ liệu là bằng chứng chơi trực tiếp đủ 3 đêm.
+- Test bản đồ: node --test tests/night-maps.test.mjs. Phase 2 phải tách tick/sim_tick, dừng bộ đếm khi pause và theo đúng thứ tự 12 bước.
+- Giữ nguyên tag phase-1. Test cũ đổi theo số chuẩn phải ghi lý do; mỗi tính năng mới có scenario headless và bằng chứng.
+- Chỉ khai đạt hiệu năng khi đo thật: headless 21600 tick <=30 giây; web 1280x720 trung bình >=30 FPS.
+- npm run proof:phase2 tạo output JSONL, so hai lần chạy và benchmark; không chỉnh tay output. Checklist web tại docs/proof/phase-2/checklist.md.
+
+## Nền Phase 1
+
 - Đọc docs/requirements/phase-1.txt và docs/notes/phase-1-assumptions.md trước khi sửa logic.
 - Cài đặt: npm install. Web: npm run dev. Kiểm chứng: npm run check.
 - CLI: npm run headless -- --seed 1 --night 1 --ticks 60 --out output.jsonl.

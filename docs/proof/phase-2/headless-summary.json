@@ -1,0 +1,157 @@
+{
+  "node": "v24.14.0",
+  "os": "win32 10.0.26200",
+  "cpu": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz",
+  "scenarios": [
+    {
+      "name": "pause",
+      "night": 1,
+      "ms": 55.16709999999999,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 120,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "paused",
+        "resumed",
+        "night_start"
+      ]
+    },
+    {
+      "name": "dash",
+      "night": 1,
+      "ms": 56.50909999999999,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 13,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "night_start",
+        "dash"
+      ]
+    },
+    {
+      "name": "charm",
+      "night": 2,
+      "ms": 54.394000000000005,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 2,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "night_start",
+        "charm_picked",
+        "dash"
+      ]
+    },
+    {
+      "name": "drifter-steal",
+      "night": 2,
+      "ms": 54.50630000000001,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 3,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "night_start",
+        "drifter_steal"
+      ]
+    },
+    {
+      "name": "drifter-drop",
+      "night": 2,
+      "ms": 59.01440000000002,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 2,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "night_start",
+        "drifter_drop",
+        "pulse"
+      ]
+    },
+    {
+      "name": "fall",
+      "night": 1,
+      "ms": 66.39189999999996,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 62,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "night_start",
+        "player_hit"
+      ]
+    },
+    {
+      "name": "pad",
+      "night": 2,
+      "ms": 54.217700000000036,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 100,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "night_start"
+      ]
+    },
+    {
+      "name": "wind",
+      "night": 3,
+      "ms": 64.77390000000003,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1850,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        "night_start"
+      ]
+    }
+  ],
+  "benchmarks": [
+    {
+      "night": 1,
+      "ms": 170.17079999999999,
+      "ticks": 18000,
+      "within_30_seconds": true
+    },
+    {
+      "night": 2,
+      "ms": 221.6311999999998,
+      "ticks": 19800,
+      "within_30_seconds": true
+    },
+    {
+      "night": 3,
+      "ms": 369.7238,
+      "ticks": 21600,
+      "within_30_seconds": true
+    }
+  ],
+  "fps": "Chưa đo trên trình duyệt; dùng nút đo FPS trong Cài đặt."
+}

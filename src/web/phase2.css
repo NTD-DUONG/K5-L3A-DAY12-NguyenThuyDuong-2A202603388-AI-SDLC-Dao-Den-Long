@@ -1,0 +1,16 @@
+:root{color:#F5F1E6;background:#0E1430}
+body,.card p,.card .small,.eyebrow,.map-key,.controls,.stats,.secondary{color:#F5F1E6}
+h2,#score{color:#F2C14E}
+#hit{box-shadow:inset 0 0 150px #FF5A5F}
+.stats>div:first-child{position:fixed;left:50%;top:40px;transform:translateX(-50%);text-align:center;background:#0e1430d9;padding:12px 20px;border-radius:12px}
+@media(max-width:850px){.stats>div:first-child{position:static;transform:none;padding:0;background:none}}
+#health{display:block;color:#F2C14E;font-size:1.4rem;margin-top:10px}
+#carry-panel{position:absolute;bottom:112px;left:50%;transform:translateX(-50%);background:#0e1430dc;border:1px solid #f2c14e55;border-radius:12px;padding:12px 18px;display:flex;align-items:center;gap:12px}
+#mote-bar{display:flex;gap:4px}#mote-bar i{width:15px;height:23px;border:1px solid #F2C14E;border-radius:3px}#mote-bar .filled{background:#FFE58A}
+#cooldowns{background:#0e1430d9;padding:15px;border-radius:10px;color:#F2C14E;font-size:.9rem;white-space:nowrap}
+#prompt{bottom:175px}#arrow{position:absolute;top:42%;left:50%;color:#F2C14E;background:#0e1430c9;border:1px solid #f2c14e55;border-radius:12px;padding:12px}
+#arrow[hidden]{display:none}#settings-panel{margin-top:18px}#settings-panel label{display:flex;justify-content:space-between;gap:20px;padding:10px 0}
+input[type=range]{accent-color:#F2C14E;width:160px}button{background:#F2C14E}.secondary{background:transparent;color:#F5F1E6}
+.urgent{color:#FF5A5F;animation:danger 1s steps(2,end) infinite}@keyframes danger{50%{opacity:.3}}
+.card{max-height:90vh;overflow:auto}.stats{border-color:#f2c14e33}
+@media(max-width:850px){#carry-panel{bottom:160px;font-size:.75rem;padding:8px}#mote-bar i{width:10px;height:18px}footer{flex-wrap:wrap}#prompt{bottom:220px}#cooldowns{font-size:.75rem;padding:8px}}

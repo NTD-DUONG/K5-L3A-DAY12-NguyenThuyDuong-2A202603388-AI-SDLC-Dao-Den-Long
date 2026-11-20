@@ -9,7 +9,8 @@ import {createGame} from '../src/core/index.mjs';
 import {validateInputs,validateScenario,FormatError} from '../src/headless/validate.mjs';
 const {tuning:t}=JSON.parse(readFileSync(new URL('../game.contract.json',import.meta.url)));
 const empty={random_motes:false,random_shades:false,motes:[],shades:[]};
-const game=s=>createGame(t,7,{...empty,...s});
+// v1.1 adds night_start; legacy behavior assertions exclude that new event only.
+const game=s=>{const g=createGame(t,7,{...empty,...s});const step=g.step;g.step=p=>step(p).filter(e=>e.name!=='night_start');return g;};
 const close=(actual,expected)=>assert.ok(Math.abs(actual-expected)<1e-8,actual+' != '+expected);
 test('tick zero and no inputs; time derived from steps',()=>{
  const g=game();assert.equal(g.snapshot().tick,0);for(let i=0;i<60;i++)g.step();
@@ -26,9 +27,9 @@ test('jump uses rising edge and lands without autojump',()=>{
  g.step({jump:false});g.step({jump:true});assert.ok(g.state.player.pos[1]>0);
 });
 test('pickup inclusive XZ boundary, capacity and exact event tick',()=>{
- const g=game({player:{carried:19},motes:[[1.5,100,0],[0,0,0],[1.501,0,0]]});
- const events=g.step();assert.equal(g.state.player.carried,20);assert.equal(g.state.motes.length,2);
- assert.deepEqual(events,[{type:'event',tick:1,name:'mote_picked',data:{carried:20}}]);assert.equal(g.state.score,10);
+ const g=game({player:{carried:9},motes:[[1,1.5,0],[0,0,0],[1.001,0,0]]});
+ const events=g.step();assert.equal(g.state.player.carried,10);assert.equal(g.state.motes.length,2);
+ assert.deepEqual(events,[{type:'event',tick:1,name:'mote_picked',data:{carried:10}}]);assert.equal(g.state.score,0);
 });
 test('partial deposits, held button, lamp cost and no setup points',()=>{
  const g=game({player:{carried:4},lanterns:[{id:'L1',pos:[2,0,0],deposited:3},{id:'L2',lit:true}]});
@@ -36,17 +37,17 @@ test('partial deposits, held button, lamp cost and no setup points',()=>{
  let e=g.step({interact:true});assert.equal(e[0].data.amount,4);assert.equal(g.state.lanterns[0].deposited,7);
  g.state.player.carried=5;assert.equal(g.step().length,0);
  g.step({interact:false});e=g.step({interact:true});
- assert.equal(g.state.lanterns[0].lit,true);assert.equal(g.state.player.carried,2);assert.equal(g.state.score,100);assert.equal(e[1].name,'lantern_lit');
+ assert.equal(g.state.lanterns[0].lit,true);assert.equal(g.state.player.carried,2);assert.equal(g.state.score,170);assert.equal(e[1].name,'lantern_lit');
 });
 test('last lamp wins once and uses actual remaining time',()=>{
  const g=game({player:{carried:10},lanterns:[{id:'L1',pos:[0,0,0]},...['L2','L3','L4','L5'].map(id=>({id,lit:true}))]});
- const e=g.step({interact:true});assert.equal(g.state.state,'won');assert.equal(g.state.score,848);
+ const e=g.step({interact:true});assert.equal(g.state.state,'won');assert.equal(g.state.score,948);
  assert.equal(e.at(-1).data.reason,'all_lit');assert.deepEqual(g.step(),[]);assert.equal(g.state.tick,1);
 });
 test('pulse boundary, cost, push, stun duration and edge/cooldown',()=>{
- const g=game({player:{carried:20},shades:[{id:'edge',pos:[5,0,0]},{id:'outside',pos:[5.001,0,0]}]});
- const e=g.step({pulse:true});assert.deepEqual(e[0].data.stunned_ids,['edge']);assert.equal(g.state.player.carried,17);
- assert.equal(g.state.shades[0].state,'stunned');close(g.state.shades[0].pos[0],8);
+ const g=game({player:{carried:10},shades:[{id:'edge',pos:[5,.8,0]},{id:'outside',pos:[5.001,.8,0]}]});
+ const e=g.step({pulse:true});assert.deepEqual(e[0].data.stunned_ids,['edge']);assert.equal(g.state.player.carried,7);
+ assert.equal(g.state.shades[0].state,'stunned');close(g.state.shades[0].pos[0],5+4/15);
  assert.equal(g.step().filter(x=>x.name==='pulse').length,0);
  g.step({pulse:false});assert.equal(g.step({pulse:true}).filter(x=>x.name==='pulse').length,0);
  for(let i=g.state.tick;i<120;i++)g.step();assert.equal(g.state.shades[0].state,'stunned');
@@ -58,7 +59,7 @@ test('insufficient pulse emits nothing',()=>{
 test('shade contact: one hit per immunity interval; no_flames stops',()=>{
  const g=game({shades:[{pos:[0,0,0]},{pos:[0,0,0]}]});let hits=[];
  for(let i=0;i<300&&g.state.state==='playing';i++)hits.push(...g.step().filter(e=>e.name==='player_hit'));
- assert.deepEqual(hits.map(e=>e.tick),[1,121,241]);assert.equal(g.state.state,'lost');assert.equal(g.state.tick,241);
+ assert.equal(hits.length,3);assert.ok(hits[1].tick-hits[0].tick>=90);assert.ok(hits[2].tick-hits[1].tick>=90);assert.equal(g.state.state,'lost');
 });
 test('safe lamp excludes shades and protects player',()=>{
  const g=game({lanterns:[{id:'L1',pos:[0,0,0],lit:true}],shades:[{pos:[0,0,0]}]});

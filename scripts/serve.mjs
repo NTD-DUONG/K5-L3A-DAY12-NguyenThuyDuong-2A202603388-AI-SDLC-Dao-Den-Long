@@ -4,7 +4,12 @@ const routes=new Map([
  ['/',new URL('../src/web/index.html',import.meta.url)],
  ['/main.mjs',new URL('../src/web/main.mjs',import.meta.url)],
  ['/style.css',new URL('../src/web/style.css',import.meta.url)],
+ ['/phase2.css',new URL('../src/web/phase2.css',import.meta.url)],
  ['/core.mjs',new URL('../src/core/index.mjs',import.meta.url)],
+ ['/terrain.mjs',new URL('../src/core/terrain.mjs',import.meta.url)],
+ ['/night-maps.mjs',new URL('../src/core/night-maps.mjs',import.meta.url)],
+ ['/audio.mjs',new URL('../src/web/audio.mjs',import.meta.url)],
+ ['/palette.mjs',new URL('../src/web/palette.mjs',import.meta.url)],
  ['/game.contract.json',new URL('../game.contract.json',import.meta.url)],
  ['/three.module.js',new URL('../node_modules/three/build/three.module.js',import.meta.url)],
  ['/three.core.js',new URL('../node_modules/three/build/three.core.js',import.meta.url)]

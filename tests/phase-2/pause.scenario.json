@@ -1,0 +1,9 @@
+{
+  "random_motes": false,
+  "random_shades": false,
+  "player": {
+    "dash_cd_ticks": 30,
+    "pulse_cd_ticks": 50,
+    "charm_ticks": 60
+  }
+}
