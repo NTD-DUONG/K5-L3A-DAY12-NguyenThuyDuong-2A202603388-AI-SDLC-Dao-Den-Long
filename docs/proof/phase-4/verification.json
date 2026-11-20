@@ -30,6 +30,11 @@
     "status": "not_run",
     "reason": "Docker executable unavailable"
   },
-  "release_status": "v1.0.0; remaining manual checks in checklist.md",
-  "manual_ui": "pending"
+  "release_status": "public v1.0.0; functional checks passed per user; manual gameplay and CLI footage artifact pending",
+  "manual_ui": {
+    "status": "passed_user_report",
+    "reported_on": "2026-11-21",
+    "source": "User confirmation: all checks passed",
+    "agent_observed": false
+  }
 }

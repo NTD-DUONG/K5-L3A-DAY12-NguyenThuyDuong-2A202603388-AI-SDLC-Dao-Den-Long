@@ -1,15 +1,19 @@
-# Phase 4 ? minh ch?ng ph?t h?nh
+﻿# Phase 4 — minh chứng phát hành
 
-- [x] Contract 1.3; regression v? t?nh to?n benchmark/leaderboard/input: 61/61 test ??t.
-- [x] Benchmark GPU th?t: 200 B?ng M?c, 100 ?om ??m, 3 ??n; warmup 3s, ?o 30s. Avg 179.37 FPS; 1% low 73.46 FPS; p95 7.40 ms; load 1614.44 ms. ??t ng??ng tham kh?o tr?n m?y hi?n t?i; m?y gi?ng vi?n ph?i ?o l?i. RSS web null, kh?ng thay b?ng heap.
-- [x] Gi? hai l?n benchmark ??u; l?n hai hidden 8223,7ms. L?n cu?i hidden 0ms sau khi t?t background throttling; kh?ng lo?i khung ch?m.
-- [x] Soak 10 ??m c?ng ti?n tr?nh, seed 7?16; 0 crash; RSS 53,2383 ? 59,4883 MB (+11,74%, d??i 20%). C? 10 k?t qu? lost l? d? li?u th?t.
-- [x] Gi?i n?n ZIP s?ch, npm ci --offline --ignore-scripts, 61/61 test ??t; ch?a quan s?t GUI b?n gi?i n?n.
-- [x] HTTP v? xu?t leaderboard tr?n ??a ki?m ch?ng t? ??ng; kh?ng c? d? li?u c? nh?n trong ZIP.
-- [x] README, LICENSE, CREDITS, CHANGELOG b?n phase, retro v? harness.
-- [ ] Ki?m tra thao t?c UI tr?c ti?p: ??i/tr?ng ph?m, ch? l?n, c?nh b?o, gi?m chuy?n ??ng, l?u t?n sau thua/th?ng ??m 3 v? m? l?i. C?c ki?m ch?ng module t? ??ng ?? ??t; ch?a coi thay th? ???c playtest.
-- [x] Video MP4 t? ??ng ghi canvas game th?t: 74.33s, 13213823 bytes; demo.json. Kh?ng c? ?m thanh, kh?ng ghi m?n h?nh ri?ng t?. Ch?a quan s?t n?i dung b?ng m?t qua c?ng c?.
-- [ ] Video ch?i th? c?ng k?m thao t?c test/headless/bench theo rubric: c?n b? sung; video t? ??ng kh?ng ???c ghi nh?n thay cho ph?n n?y.
-- [x] Tag phase-4 v? v1.0.0; Release: https://github.com/NTD-DUONG/K5-L3A-DAY12-NguyenThuyDuong-2A202603388-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0 (ki?m tra sau khi upload).
+Ngày 21/11/2026, người học xác nhận: “tôi kiểm tra rồi, tất cả đều đạt”. Kết quả thao tác trực tiếp được ghi theo xác nhận này, không phải quan sát của công cụ AI.
 
-Docker ch?a ???c build tr?n m?y n?y v? ch?a c?i Docker. Kh?ng tuy?n b? ??t m?i test ?n. Retro ghi r? token/chi ph? th?c ch?a c? th?ng k?.
+- [x] Contract 1.3; 61/61 kiểm thử tự động đạt.
+- [x] Benchmark GPU thật: 200 Bóng Mực, 100 đom đóm, 3 đèn; khởi động 3 giây, đo 30 giây. Trung bình 179,37 FPS; 1% low 73,46 FPS; p95 7,40 ms; tải 1614,44 ms. Đạt ngưỡng tham khảo; máy giảng viên cần đo lại.
+- [x] Giữ hai lần benchmark trước; không loại khung chậm. Lần cuối hidden_ms = 0. RSS bản web là null.
+- [x] Soak 10 đêm cùng tiến trình, seed 7–16: không crash; RSS 53,2383 → 59,4883 MB, tăng 11,74%. Cả 10 kết quả lost là dữ liệu thật.
+- [x] Giải nén gói sạch, cài dependency, chạy 61/61 test đạt.
+- [x] API leaderboard, lưu đĩa, top 10, thứ tự bằng điểm và xuất JSON đã kiểm thử tự động.
+- [x] Người học xác nhận các chức năng đều đạt, bao gồm nhóm UI còn chờ: đổi/trùng phím, chữ lớn, cảnh báo, giảm chuyển động, lưu và xem bảng điểm.
+- [x] README, LICENSE, CREDITS, CHANGELOG bốn phase, retro và harness đã có.
+- [x] MP4 ghi canvas game thật bằng input tự động: 74,33 giây, 13.213.823 byte; metadata trong demo.json.
+- [x] Tag phase-4 và v1.0.0; Release public có ZIP, SHA256, demo.mp4, bench.json và soak.json.
+- [ ] Video chơi thủ công kèm chạy test/headless/bench: chưa có file bổ sung được cung cấp hoặc kiểm chứng. Xác nhận chức năng không làm thay đổi nội dung video tự động đang có.
+
+Release: https://github.com/NTD-DUONG/K5-L3A-DAY12-NguyenThuyDuong-2A202603388-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0
+
+Docker chưa được build trong môi trường công cụ; ZIP là bản chạy được đã cung cấp. Không khẳng định kết quả test ẩn hoặc số đo máy giảng viên. Token/chi phí thực chưa có thống kê.
