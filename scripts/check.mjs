@@ -1,0 +1,10 @@
+import { readFile, access } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { TICK_RATE, DT } from '../src/core/index.mjs';
+const root = new URL('../', import.meta.url);
+const contract = JSON.parse(await readFile(new URL('game.contract.json',root),'utf8'));
+assert.equal(contract.contract_version,'1.0');
+assert.equal(contract.tuning.lantern_count_night1,5);
+assert.equal(TICK_RATE,60); assert.equal(DT,1/60);
+for (const file of ['AGENTS.md','src/web/index.html','src/headless/cli.mjs','docs/requirements/phase-1.txt','docs/proof/phase-1/checklist.md']) await access(new URL(file,root));
+console.log('PASS: cấu trúc và contract JSON. Tiếp theo chạy bộ kiểm chứng gameplay/headless.');

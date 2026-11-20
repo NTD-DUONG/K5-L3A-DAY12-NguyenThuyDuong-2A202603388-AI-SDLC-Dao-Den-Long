@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101c28">
+<title>Đảo Đèn Lồng · Đêm 1</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main id="game" aria-label="Đảo Đèn Lồng — game 3D">
+<canvas id="world" aria-label="Màn chơi 3D"></canvas>
+<header class="top">
+<div class="brand"><span class="eyebrow">ĐẢO ĐÈN LỒNG</span><h1>Đêm 1 <span>/ Đảo Bến</span></h1></div>
+<div class="stats">
+<div><span class="eyebrow">NGỌN LỬA</span><strong id="health">● ● ●</strong></div>
+<div><span class="eyebrow">ÁNH SÁNG</span><strong id="carry">0 / 20</strong></div>
+<div><span class="eyebrow">ĐÈN ĐÃ THẮP</span><strong id="lit">0 / 5</strong></div>
+<div><span class="eyebrow">BÌNH MINH</span><strong id="time">05:00</strong></div>
+</div>
+</header>
+<aside class="map-panel"><span class="eyebrow">BẢN ĐỒ ĐẢO</span><canvas id="map" width="180" height="180" aria-label="Bản đồ vị trí người chơi, đèn và Bóng Mực"></canvas><span class="map-key">Vàng · đèn &nbsp; Tím · Bóng Mực</span></aside>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="prompt"></div>
+<footer>
+<div class="controls"><span><kbd>W A S D</kbd> Di chuyển</span><span><kbd>Space</kbd> Nhảy</span><span><kbd>E</kbd> Nạp đèn</span><span><kbd>Q</kbd> Tỏa sáng · 3 ánh sáng</span><span><kbd>← →</kbd> / kéo chuột · Camera</span><span><kbd>Esc</kbd> Tạm dừng</span></div>
+<div class="score">ĐIỂM <strong id="score">0</strong></div>
+</footer>
+<section id="overlay" class="overlay">
+<div class="card"><span id="card-kicker" class="eyebrow">MỘT CHÚT ÁNH SÁNG, MỘT HÒN ĐẢO THỨC GIẤC</span><h2 id="card-title">Đêm đang chờ Mây.</h2><p id="card-body">Gom đom đóm vàng, mang về thắp 5 Đèn Lồng Lớn. Giữ khoảng cách với Bóng Mực tím. Tỏa sáng để đẩy chúng đi, hoặc trú bên đèn đã thắp.</p><button id="start" disabled>Đang dựng đảo…</button><button id="restart" class="secondary" hidden>Chơi lại từ đầu</button><p class="small">Mỗi đèn cần 10 ánh sáng · Mang tối đa 20 · Bạn có 5 phút</p></div>
+</section>
+<div id="hit" aria-hidden="true"></div>
+</main>
+<script type="module">
+import('/main.mjs').catch(error=>{
+ document.querySelector('#card-title').textContent='Chưa mở được màn chơi';
+ document.querySelector('#card-body').textContent='Hãy chạy npm install, rồi khởi động lại npm run dev. Trình duyệt cần hỗ trợ WebGL 2. Chi tiết: '+error.message;
+ document.querySelector('#start').textContent='Tải lại';
+ document.querySelector('#start').disabled=false;
+ document.querySelector('#start').onclick=()=>location.reload();
+});
+</script>
+</body></html>
