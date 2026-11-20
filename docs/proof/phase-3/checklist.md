@@ -2,6 +2,14 @@
 
 Trạng thái: đã triển khai code, 55/55 test đạt, 9 scenario chạy hai lần giống hệt. Chưa chơi/quan sát trực tiếp bản web sau thay luật. Không kết luận đạt test ẩn.
 
+## Kiểm tra lại theo yêu cầu chốt Phase 3
+
+- Đã chạy lại npm run check:55/55 đạt, không skip; báo cáo đã cập nhật.
+- Đã chạy lại npm run proof:phase3:9scenario cùng đầu vào có output giống hệt và cả3đêm hoàn tất dưới30giây.
+- Đã thử kết nối trình duyệt bằng công cụ computer-use: lỗi browser access host unavailable. Không thể tự chơi, chụp ảnh hoặc xác nhận hình ảnh/blink/màu trong lần này.
+- Rà soát mã renderer: có thanh dầu hướng camera, nhấp nháy theo sim_tick%60<30, đèn tắt scaleY0,64 so với0,8 lúc sáng (giảm20%), có vết rách và checkbox màu được lưu trong localStorage. Đây là kiểm tra mã, không phải bằng chứng đã thấy trên trình duyệt.
+- Mốc phase-3 ghi nhận bản triển khai với kiểm chứng tự động; các ô web bên dưới còn chờ, không coi việc gắn tag là chứng minh đã đạt chúng.
+
 ## Tự động đã chạy
 
 - [x] Contract v1.2 và tuning chuẩn; snapshot/scenario mở rộng.

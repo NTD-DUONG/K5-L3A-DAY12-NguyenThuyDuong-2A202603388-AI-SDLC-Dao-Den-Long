@@ -8,3 +8,7 @@
 - Rà soát UI: thanh dầu quay về camera, mũi tên vẫn ưu tiên đèn tắt như yêu cầu cũ; khi không còn đèn tắt thì hướng tới đèn yếu. Tùy chọn dễ phân biệt không vào lõi/headless.
 - Chưa kiểm chứng trực tiếp bằng trình duyệt: thanh dầu/blink1Hz, giấy rách/xẹp, màu và lưu cài đặt; cần người học chơi thử và cung cấp ảnh. Không dùng ảnhPhase2 chứng minh luậtPhase3.
 - Token/chi phí: chưa có số đo; không tự tạo con số. Chưa tag/push phase-3.
+
+## Kiểm tra lại và lưu mốc
+
+Người học yêu cầu làm luôn phần còn lại. Đã chạy lại55test và9scenario, cập nhật output thật. Công cụ trình duyệt vẫn lỗi browser access host unavailable nên không tạo ảnh hoặc đánh dấu đạt thị giác. Lưu mốc triển khai phase-3 với ghi chú minh bạch còn chờ kiểm tra trực tiếp, theo nguyên tắc lab cho phép chốt mốc và ghi rõ phần chưa đạt. Đây không phải xác nhận hoàn tất mọi yêu cầu nhìn/nghe trên web.
