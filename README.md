@@ -1,6 +1,6 @@
-# Đảo Đèn Lồng — Phase 2
+# Đảo Đèn Lồng — Phase 3: Đèn cạn dầu
 
-Bản web 3D gồm 3 đêm, contract headless v1.1. Đã kiểm chứng tự động và lưu output thật; đang chờ chơi thử bản web, nghe âm thanh và đo FPS trước khi chốt tag phase-2. Phase 1 giữ nguyên tại tag phase-1.
+Bản web3D gồm3đêm, contract v1.2. Đã triển khai luật dầu và kiểm chứng tự động; chờ chơi thử giao diện sau thay luật trước khi chốt phase-3. Tag phase-1 giữ nguyên; minh chứng Phase2 là kết quả lịch sử, không chứng minh luật dầu mới.
 
 ## Cài và chạy
 
@@ -21,18 +21,20 @@ Menu → giới thiệu Đêm → chơi → kết quả → Đêm kế tiếp. T
 
 ## Luật chuẩn
 
-Chạy6m/s, sức chứa10, mỗi đèn cần10. Lướt14m/s trong0,2s, hồi1,5s. Pulse tốn3, bán kính3D5m, hồi3s. Máu3, bất tử1,5s sau hit. Đêm1/2/3 dài300/330/360s. Chi tiết: [số liệu chuẩn](docs/requirements/phase-2-standard.md), [spec và thay đổi](docs/notes/phase-2-spec.md), game.contract.json.
+Sức chứa bắt đầu10, tăng2 mỗi lần thắp thành công (cả thắp lại), tối đa20. Thắp đầu cần10, thắp lại cần5. Đèn có100dầu, hao1/giây; mỗi đom đóm châm10dầu. Dưới30dầu mất safe và shade có thể hút5/giây/con. Đêm1/2/3 dài240/270/300s; cần3/5,4/6,5/7đèn sáng tại bình minh, còn sống. Không thắng sớm khi đủ đèn. Các luật di chuyển/dash/charm còn như Ticket-02.
 
-Điểm: nhặt không cộng điểm; nạp +10 mỗi đom đóm, thắp +100, mỗi Bóng Mực trúng pulse +5 kể cả đang choáng. Thắng cộng floor(giây còn lại)*2 +50*máu còn lại.
+Điểm: nạp/refuel+5 mỗi đom đóm; thắp đầu+100, thắp lại+40; pulse+5 mỗi shade hoặc tổng+15 nếu đang drain. Khi thắng: mỗi đèn sáng+50+floor(fuel), mỗi lửa+50; không thưởng thời gian. [Ticket-03](docs/requirements/phase-3.md), [ADR](docs/decisions/ADR-003-lantern-fuel.md), [changelog](CHANGELOG.md).
+
+Cài đặt có “Bảng màu dễ phân biệt” được lưu: mắt/viền shade xanh, UI nguy hiểm trắng kèm⚠. Đèn tắt xẹp20% và rách; thanh dầu/đèn dưới30 nhấp nháy1Hz.
 
 ## Kiểm chứng
 
 ```sh
 npm run check
-npm run proof:phase2
+npm run proof:phase3
 ```
 
-check chạy regression và test tính năng mới. proof:phase2 tạo JSONL cho 8 scenario, so hai lần chạy, đo cả3đêm. Xem [bằng chứng và checklist](docs/proof/phase-2/checklist.md).
+check chạy regression và test tính năng mới; proof:phase3 tạo JSONL9scenario, so hai lần chạy và đo3đêm. Xem [bằng chứng](docs/proof/phase-3/checklist.md). Muốn tái lập v1.1 dùng commit561be77; không chạy script Phase2 trên v1.2.
 
 ## Headless
 

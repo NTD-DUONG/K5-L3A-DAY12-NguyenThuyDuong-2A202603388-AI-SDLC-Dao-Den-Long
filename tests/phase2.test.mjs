@@ -11,7 +11,7 @@ const close=(a,b)=>assert.ok(Math.abs(a-b)<1e-6,a+' != '+b);
 test('pause freezes sim time, every cooldown, TTL and charm; tick continues',()=>{
  const g=make({player:{charm_ticks:60,invuln_ticks:80,dash_cd_ticks:30,pulse_cd_ticks:40},motes:[{pos:[4,0,0],kind:'dropped',ttl_s:8}]});
  assert.equal(g.step({pause:true})[0].name,'paused');for(let i=0;i<20;i++)g.step();
- const s=g.snapshot();assert.equal(s.tick,21);assert.equal(s.sim_tick,0);assert.equal(s.state,'paused');assert.equal(s.player.charm_s,1);assert.equal(s.motes[0].ttl_s,8);assert.equal(s.time_left_s,300);
+ const s=g.snapshot();assert.equal(s.tick,21);assert.equal(s.sim_tick,0);assert.equal(s.state,'paused');assert.equal(s.player.charm_s,1);assert.equal(s.motes[0].ttl_s,8);assert.equal(s.time_left_s,240);
  g.step({pause:false});const e=g.step({pause:true});assert.equal(e[0].name,'resumed');assert.equal(g.state.sim_tick,1);
 });
 test('dash is exactly 12 ticks, 14m/s, rising edge and 90 tick cooldown',()=>{
@@ -79,7 +79,7 @@ test('full 21600 step night CLI schema and runtime',()=>{
    const run=spawnSync(process.execPath,[cli,'--seed','5','--night',String(night),'--ticks','21600','--snapshot-every','600','--scenario',fileURLToPath(new URL('../tests/phase-2/wind.scenario.json',import.meta.url)),'--out',out],{encoding:'utf8'});
    assert.equal(run.status,0,run.stderr);assert.ok(performance.now()-start<30000);
    const lines=readFileSync(out,'utf8').trim().split('\n').map(JSON.parse);
-   assert.equal(lines[0].night,night);assert.equal(lines.at(-1).type,'end');assert.equal(lines.at(-1).ticks,[18000,19800,21600][night-1]);
+   assert.equal(lines[0].night,night);assert.equal(lines.at(-1).type,'end');assert.equal(lines.at(-1).ticks,[14400,16200,18000][night-1]);
    for(const key of ['motes','drifters','charms'])assert.ok(Array.isArray(lines[0][key]));
   }
  }finally{rmSync(dir,{force:true,recursive:true});}
@@ -105,7 +105,7 @@ test('pulse pushes exactly four meters over fifteen active ticks',()=>{
 test('all three nights win at exact deadline; no flames still loses first',()=>{
  for(const night of [1,2,3]){
   const lanterns=createNightMap(night).lanterns.map((l,i)=>({id:l.id,...(i?{lit:true}:{pos:[0,0,0]})}));
-  const g=make({time_left_s:1/60,player:{carried:10},lanterns},night);g.step({interact:true});assert.equal(g.state.state,'won');assert.equal(g.state.score,350);
+  const g=make({time_left_s:1/60,player:{carried:10},lanterns},night);g.step({interact:true});assert.equal(g.state.state,'won');assert.equal(g.state.score,[1046,1195,1344][night-1]);
   const h=make({time_left_s:1/60,player:{carried:10,flames:0},lanterns},night);const e=h.step({interact:true});assert.equal(h.state.state,'lost');assert.equal(e.at(-1).data.reason,'no_flames');
  }
 });

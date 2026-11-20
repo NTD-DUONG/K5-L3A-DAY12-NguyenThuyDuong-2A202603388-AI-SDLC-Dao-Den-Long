@@ -4,6 +4,7 @@ import {tmpdir,cpus,platform,release} from 'node:os';
 import {join,resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
+assert.equal(JSON.parse(readFileSync(new URL('../game.contract.json',import.meta.url),'utf8')).contract_version,'1.1','Chạy minh chứng Phase2 trên commit561be77. Bản v1.2 dùng npm run proof:phase3, không ghi đè output cũ.');
 const root=fileURLToPath(new URL('../',import.meta.url)),proof=resolve(root,'docs/proof/phase-2');mkdirSync(proof,{recursive:true});
 const manifest={"pause":{"night":1,"ticks":120},"dash":{"night":1,"ticks":13},"charm":{"night":2,"ticks":2},"drifter-steal":{"night":2,"ticks":3},"drifter-drop":{"night":2,"ticks":2},"fall":{"night":1,"ticks":62},"pad":{"night":2,"ticks":100},"wind":{"night":3,"ticks":1850}};
 const temp=mkdtempSync(join(tmpdir(),'lantern-proof-'));

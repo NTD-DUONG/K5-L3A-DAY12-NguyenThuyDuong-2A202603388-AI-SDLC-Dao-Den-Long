@@ -1,0 +1,366 @@
+{
+  "contract": "1.2",
+  "node": "v24.14.0",
+  "os": "win32",
+  "cpu": "11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz",
+  "scenarios": [
+    {
+      "name": "fuel-out",
+      "ms": 56.1682,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 61,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 60,
+          "name": "lantern_out",
+          "data": {
+            "lantern_id": "L1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "refuel",
+      "ms": 55.51819999999998,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 2,
+        "state": "playing",
+        "score": 10
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 1,
+          "name": "refuel",
+          "data": {
+            "lantern_id": "L1",
+            "amount": 2,
+            "fuel": 100
+          }
+        }
+      ]
+    },
+    {
+      "name": "relight-capacity",
+      "ms": 53.767600000000016,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 2,
+        "state": "playing",
+        "score": 45
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 1,
+          "name": "deposit",
+          "data": {
+            "lantern_id": "L1",
+            "amount": 1,
+            "deposited": 5
+          }
+        },
+        {
+          "tick": 1,
+          "name": "lantern_lit",
+          "data": {
+            "lantern_id": "L1",
+            "relight": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "stacked-drain",
+      "ms": 60.20429999999999,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 120,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 60,
+          "name": "fuel_drain",
+          "data": {
+            "lantern_id": "L1",
+            "shade_id": "S1",
+            "fuel": 18
+          }
+        },
+        {
+          "tick": 60,
+          "name": "fuel_drain",
+          "data": {
+            "lantern_id": "L1",
+            "shade_id": "S2",
+            "fuel": 18
+          }
+        },
+        {
+          "tick": 120,
+          "name": "fuel_drain",
+          "data": {
+            "lantern_id": "L1",
+            "shade_id": "S1",
+            "fuel": 7
+          }
+        },
+        {
+          "tick": 120,
+          "name": "fuel_drain",
+          "data": {
+            "lantern_id": "L1",
+            "shade_id": "S2",
+            "fuel": 7
+          }
+        }
+      ]
+    },
+    {
+      "name": "pulse-drain",
+      "ms": 56.829099999999926,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 121,
+        "state": "playing",
+        "score": 15
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 1,
+          "name": "pulse",
+          "data": {
+            "stunned_ids": [
+              "S1"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "dawn-survived",
+      "ms": 51.61719999999991,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 537
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 1,
+          "name": "game_over",
+          "data": {
+            "result": "won",
+            "reason": "dawn_survived"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dawn-out",
+      "ms": 64.22119999999995,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "lost",
+        "score": 0
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 1,
+          "name": "lantern_out",
+          "data": {
+            "lantern_id": "L1"
+          }
+        },
+        {
+          "tick": 1,
+          "name": "game_over",
+          "data": {
+            "result": "lost",
+            "reason": "dawn"
+          }
+        }
+      ]
+    },
+    {
+      "name": "last-tick-relight",
+      "ms": 53.15730000000008,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 663
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 1,
+          "name": "deposit",
+          "data": {
+            "lantern_id": "L1",
+            "amount": 5,
+            "deposited": 5
+          }
+        },
+        {
+          "tick": 1,
+          "name": "lantern_lit",
+          "data": {
+            "lantern_id": "L1",
+            "relight": true
+          }
+        },
+        {
+          "tick": 1,
+          "name": "game_over",
+          "data": {
+            "result": "won",
+            "reason": "dawn_survived"
+          }
+        }
+      ]
+    },
+    {
+      "name": "pause-fuel",
+      "ms": 55.87150000000008,
+      "deterministic": true,
+      "end": {
+        "type": "end",
+        "ticks": 120,
+        "state": "playing",
+        "score": 0
+      },
+      "events": [
+        {
+          "tick": 1,
+          "name": "paused",
+          "data": {}
+        },
+        {
+          "tick": 61,
+          "name": "resumed",
+          "data": {}
+        },
+        {
+          "tick": 61,
+          "name": "night_start",
+          "data": {
+            "night": 1
+          }
+        },
+        {
+          "tick": 120,
+          "name": "fuel_drain",
+          "data": {
+            "lantern_id": "L1",
+            "shade_id": "S1",
+            "fuel": 14
+          }
+        }
+      ]
+    }
+  ],
+  "benchmarks": [
+    {
+      "night": 1,
+      "ms": 220.06510000000003,
+      "end": {
+        "type": "end",
+        "ticks": 14400,
+        "state": "lost",
+        "score": 0
+      }
+    },
+    {
+      "night": 2,
+      "ms": 348.91149999999993,
+      "end": {
+        "type": "end",
+        "ticks": 16200,
+        "state": "lost",
+        "score": 0
+      }
+    },
+    {
+      "night": 3,
+      "ms": 478.2287000000001,
+      "end": {
+        "type": "end",
+        "ticks": 18000,
+        "state": "lost",
+        "score": 0
+      }
+    }
+  ],
+  "web": "Chưa kiểm chứng trực tiếp sau thay luật."
+}

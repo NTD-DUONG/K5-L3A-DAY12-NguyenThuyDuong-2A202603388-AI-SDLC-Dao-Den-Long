@@ -1,0 +1,22 @@
+﻿[
+    {
+        "path":  "/",
+        "status":  200
+    },
+    {
+        "path":  "/main.mjs",
+        "status":  200
+    },
+    {
+        "path":  "/phase2.css",
+        "status":  200
+    },
+    {
+        "path":  "/core.mjs",
+        "status":  200
+    },
+    {
+        "path":  "/game.contract.json",
+        "status":  200
+    }
+]

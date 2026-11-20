@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "node scripts/serve.mjs",
     "headless": "node src/headless/cli.mjs",
-    "check": "node scripts/check.mjs && node --check src/web/main.mjs && node --test tests/core.test.mjs tests/night-maps.test.mjs tests/phase2.test.mjs",
-    "test": "node --test tests/core.test.mjs tests/night-maps.test.mjs tests/phase2.test.mjs",
-    "proof:phase2": "node scripts/prove-phase2.mjs"
+    "check": "node scripts/check.mjs && node --check src/web/main.mjs && node --test tests/core.test.mjs tests/night-maps.test.mjs tests/phase2.test.mjs tests/phase3.test.mjs",
+    "test": "node --test tests/core.test.mjs tests/night-maps.test.mjs tests/phase2.test.mjs tests/phase3.test.mjs",
+    "proof:phase2": "node scripts/prove-phase2.mjs",
+    "proof:phase3": "node scripts/prove-phase3.mjs"
   },
   "engines": {
     "node": ">=20"

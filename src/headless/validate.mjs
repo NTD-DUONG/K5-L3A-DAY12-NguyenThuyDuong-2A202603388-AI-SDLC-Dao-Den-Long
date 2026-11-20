@@ -17,7 +17,7 @@ export function validateInputs(v){
 }
 export function validateScenario(s,t,night=1){
   obj(s,'scenario');
-  if(s.player!==undefined){obj(s.player,'player');if(s.player.pos!==undefined)vec(s.player.pos,3,'player.pos');if(s.player.carried!==undefined)int(s.player.carried,0,t.carry_capacity,'carried');if(s.player.flames!==undefined)int(s.player.flames,0,t.flames,'flames');}
+  if(s.player!==undefined){obj(s.player,'player');if(s.player.successful_lights!==undefined)int(s.player.successful_lights,0,Number.MAX_SAFE_INTEGER,'successful_lights');if(s.player.pos!==undefined)vec(s.player.pos,3,'player.pos');if(s.player.carried!==undefined)int(s.player.carried,0,Math.min(t.capacity_max,t.carry_capacity+2*(s.player.successful_lights??0)),'carried');if(s.player.flames!==undefined)int(s.player.flames,0,t.flames,'flames');}
   if(s.player)for(const k of ['invuln_ticks','dash_cd_ticks','pulse_cd_ticks','charm_ticks'])if(s.player[k]!==undefined)int(s.player[k],0,Number.MAX_SAFE_INTEGER,k);
   for(const k of ['random_motes','random_shades','random_drifters','wind_enabled'])if(s[k]!==undefined)bool(s[k],k);
   if(s.time_left_s!==undefined){num(s.time_left_s,'time');if(s.time_left_s<0)fail('negative time');}
@@ -25,7 +25,8 @@ export function validateScenario(s,t,night=1){
   if(s.shades!==undefined){arr(s.shades,'shades');const ids=new Set();for(const x of s.shades){obj(x,'shade');vec(x.pos,3,'shade.pos');if(x.id!==undefined){if(typeof x.id!=='string'||!x.id||ids.has(x.id))fail('invalid shade id');ids.add(x.id);}}}
   if(s.lanterns!==undefined){arr(s.lanterns,'lanterns');const ids=new Set();for(const l of s.lanterns){obj(l,'lantern');if(typeof l.id!=='string'||!/^L[1-7]$/.test(l.id)||ids.has(l.id))fail('invalid lantern id');ids.add(l.id);if(l.pos!==undefined)vec(l.pos,3,'lantern.pos');if(l.deposited!==undefined)int(l.deposited,0,t.lantern_cost,'deposited');if(l.lit!==undefined)bool(l.lit,'lit');if(l.lit===false&&l.deposited===t.lantern_cost)fail('full lantern cannot be unlit');}}
   if(s.lanterns?.some(l=>Number(l.id.slice(1))>night+4))fail('lantern not in this night');
-  if(s.shades)for(const x of s.shades){if(x.state!==undefined&&!['spawning','wander','chase','recoil','stunned'].includes(x.state))fail('invalid shade state');if(x.state_ticks_left!==undefined)int(x.state_ticks_left,0,Number.MAX_SAFE_INTEGER,'state_ticks_left');}
+  for(const l of s.lanterns??[]){if(l.fuel!==undefined){num(l.fuel,'fuel');if(l.fuel<0||l.fuel>t.fuel_max)fail('fuel out of range');}if(l.ever_lit!==undefined)bool(l.ever_lit,'ever_lit');if(l.lit===false&&(l.deposited??0)>=(l.ever_lit?t.relight_cost:t.lantern_cost))fail('full lantern cannot be unlit');}
+  if(s.shades)for(const x of s.shades){if(x.state!==undefined&&!['spawning','wander','chase','recoil','stunned','drain'].includes(x.state))fail('invalid shade state');if(x.state_ticks_left!==undefined)int(x.state_ticks_left,0,Number.MAX_SAFE_INTEGER,'state_ticks_left');if(x.target_lantern_id!==undefined&&x.target_lantern_id!==null&&(typeof x.target_lantern_id!=='string'||!/^L[1-7]$/.test(x.target_lantern_id)||Number(x.target_lantern_id.slice(1))>night+4))fail('invalid target_lantern_id');}
   for(const k of ['drifters','charms'])if(s[k]!==undefined){arr(s[k],k);const ids=new Set();for(const x of s[k]){
     obj(x,k);if(typeof x.id!=='string'||!x.id||ids.has(x.id))fail('invalid '+k+' id');ids.add(x.id);
     if(k==='drifters'){vec(x.pos,3,'drifter.pos');if(x.state!==undefined&&!['idle','chase','flee','removed'].includes(x.state))fail('invalid drifter state');if(x.stolen!==undefined)int(x.stolen,0,3,'stolen');}

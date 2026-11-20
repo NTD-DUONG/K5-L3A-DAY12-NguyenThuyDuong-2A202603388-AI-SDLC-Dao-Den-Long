@@ -14,7 +14,7 @@ const game=s=>{const g=createGame(t,7,{...empty,...s});const step=g.step;g.step=
 const close=(actual,expected)=>assert.ok(Math.abs(actual-expected)<1e-8,actual+' != '+expected);
 test('tick zero and no inputs; time derived from steps',()=>{
  const g=game();assert.equal(g.snapshot().tick,0);for(let i=0;i<60;i++)g.step();
- assert.deepEqual(g.snapshot().player.pos,[0,0,0]);assert.equal(g.state.time_left_s,299);assert.equal(g.snapshot().sim_tick,60);
+ assert.deepEqual(g.snapshot().player.pos,[0,0,0]);assert.equal(g.state.time_left_s,239);assert.equal(g.snapshot().sim_tick,60);
 });
 test('movement normalized, yaw transform and persistence',()=>{
  const g=game();g.step({move:[1,1],cam_yaw_deg:90});for(let i=1;i<60;i++)g.step();
@@ -37,12 +37,14 @@ test('partial deposits, held button, lamp cost and no setup points',()=>{
  let e=g.step({interact:true});assert.equal(e[0].data.amount,4);assert.equal(g.state.lanterns[0].deposited,7);
  g.state.player.carried=5;assert.equal(g.step().length,0);
  g.step({interact:false});e=g.step({interact:true});
- assert.equal(g.state.lanterns[0].lit,true);assert.equal(g.state.player.carried,2);assert.equal(g.state.score,170);assert.equal(e[1].name,'lantern_lit');
+ assert.equal(g.state.lanterns[0].lit,true);assert.equal(g.state.player.carried,2);assert.equal(g.state.score,135);assert.equal(e[1].name,'lantern_lit');
 });
-test('last lamp wins once and uses actual remaining time',()=>{
- const g=game({player:{carried:10},lanterns:[{id:'L1',pos:[0,0,0]},...['L2','L3','L4','L5'].map(id=>({id,lit:true}))]});
- const e=g.step({interact:true});assert.equal(g.state.state,'won');assert.equal(g.state.score,948);
- assert.equal(e.at(-1).data.reason,'all_lit');assert.deepEqual(g.step(),[]);assert.equal(g.state.tick,1);
+test('v1.2 all lamps stay playing until dawn; final bonus is fuel-based',()=>{
+ const g=game({time_left_s:1,player:{carried:10},lanterns:[{id:'L1',pos:[0,0,0]},...['L2','L3','L4','L5'].map(id=>({id,lit:true}))]});
+ const first=g.step({interact:true});assert.equal(g.state.state,'playing');assert.equal(g.state.score,150);assert.ok(!first.some(e=>e.name==='game_over'));
+ let events;for(let i=1;i<60;i++)events=g.step();
+ assert.equal(g.state.state,'won');assert.equal(g.state.score,1045);
+ assert.equal(events.at(-1).data.reason,'dawn_survived');assert.deepEqual(g.step(),[]);assert.equal(g.state.tick,60);
 });
 test('pulse boundary, cost, push, stun duration and edge/cooldown',()=>{
  const g=game({player:{carried:10},shades:[{id:'edge',pos:[5,.8,0]},{id:'outside',pos:[5.001,.8,0]}]});
@@ -51,7 +53,7 @@ test('pulse boundary, cost, push, stun duration and edge/cooldown',()=>{
  assert.equal(g.step().filter(x=>x.name==='pulse').length,0);
  g.step({pulse:false});assert.equal(g.step({pulse:true}).filter(x=>x.name==='pulse').length,0);
  for(let i=g.state.tick;i<120;i++)g.step();assert.equal(g.state.shades[0].state,'stunned');
- g.step();assert.equal(g.state.shades[0].state,'chase');
+ g.step();assert.equal(g.state.shades[0].state,'wander');
 });
 test('insufficient pulse emits nothing',()=>{
  const g=game({player:{carried:2}});assert.equal(g.step({pulse:true}).length,0);assert.equal(g.state.player.carried,2);

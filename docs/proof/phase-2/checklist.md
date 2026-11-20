@@ -1,6 +1,21 @@
 # Bằng chứng Phase 2
 
-Trạng thái: tự động đã chạy; bản web chưa được quan sát/chơi bằng công cụ, chưa có ảnh Phase2 hoặc phép đo FPS. Không gắn tag phase-2 trước khi hoàn tất kiểm chứng này.
+Trạng thái: 36/36 test đạt. Đã xem 3 ảnh cũ có file trong repo và loạt 7 ảnh mới trong hội thoại, thể hiện menu, chơi/thắng Đêm1 và Đêm2, giới thiệu Đêm2 và chơi Đêm3. Chưa có màn Bình Minh hoặc phép đo FPS. Xem [bản minh chứng tổng hợp](minh-chung.md). Chưa đủ để chốt tag phase-2.
+
+## Ảnh người học cung cấp — 20/11/2026
+
+| File | Quan sát được |
+|---|---|
+| [Đang chơi](web-playing.png) | Đêm1,1/5đèn,1/10đom đóm, đồng hồ04:04, HUD/cooldown/mũi tên |
+| [Tạm dừng](web-paused.png) | Có Tiếp tục, Chơi lại Đêm, Cài đặt, Về menu; chưa chứng minh hành vi từng nút |
+| [Thắng Đêm1](web-night1-won.png) | ĐiểmĐêm1=1298, tổngđãthắng=1298, có nút Đêm tiếp theo |
+
+Lỗi trong ảnh trước sửa: đồng hồ chồng điểm và nhãn mũi tên bị nghiêng. Đã sửa mã: đồng hồ là phần tử riêng trong bố cục grid ba cột; mũi tên chỉ xoay biểu tượng, nhãn nằm ngang và chuyển lên trên để không che Mây. Người học đã xác nhận “ok đc rồi” sau sửa. Chưa có ảnh mới hoặc xác nhận riêng kích thước1280×720.
+
+- [x] Đồng hồ ở trên giữa, nhãn mũi tên nằm ngang sau sửa: người học xác nhận và loạt ảnh mới thể hiện rõ.
+- [x] Có ảnh thắng Đêm1 và Đêm2; tổng điểm 1278+1444=2722 khớp ảnh.
+- [x] Có ảnh giới thiệu Đêm2 và gameplay Đêm3 với1/7đèn.
+- [ ] Lưu file gốc của loạt7ảnh mới vào repo; hiện chỉ có ảnh trong hội thoại.
 
 ## Tự động
 

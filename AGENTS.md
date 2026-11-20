@@ -1,5 +1,13 @@
 # Đảo Đèn Lồng
 
+## Phase 3 — luật hiện tại
+
+- Đọc docs/requirements/phase-3.md, CHANGELOG.md và docs/decisions/ADR-003-lantern-fuel.md. Ticket-03 thay các luật v1.1 được chỉ rõ.
+- Dầu lưu nguyên đơn vị1/60; bước2 trừ hao/drain và tắt ngay. Chỉ làm tròn khi xuất. Pause dừng dầu.
+- Không thắng sớm/all_lit; tại bình minh còn sống và đủ ceil(0,6*n) đèn mới thắng dawn_survived; no_flames ưu tiên.
+- Capacity dẫn xuất từ successfulLights; scenario/refuel không làm tăng. Safe chỉ fuel>=30; drain có pulse bonus15 tổng.
+- npm run proof:phase3 lưu minh chứng thật, không ghi đè output Phase1–2. Màu dễ phân biệt chỉ ảnh hưởng renderer/CSS/localStorage.
+
 ## Phase 2 đang triển khai
 
 - Đọc docs/requirements/phase-2.txt và docs/notes/phase-2-spec.md; ticket mới thay luật cũ khi quy định rõ.
