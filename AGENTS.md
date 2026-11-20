@@ -1,5 +1,15 @@
 # Đảo Đèn Lồng
 
+## Phase 4 / phát hành
+
+- Contract1.3 giữ luật gameplay1.2. Benchmark dùng createBenchmark(options.benchmark), không đưa chế độ miễn hao/nhặt/hit vào scenario gameplay thông thường.
+- Chạy npm run check; soak: npm run soak -- --seed 7 --nights 10 --out docs/proof/phase-4/soak.json. Bộ nhớ phải là RSS thực, không sửa số để đạt.
+- Bench: npm run bench -- --seed 42 --duration 30 --out docs/proof/phase-4/bench.json. Cần GPU/trình duyệt thật, không dùng headless timing thay FPS.
+- Benchmark đúng200shade/100mote/3đèn100dầu, camera30m/Y15/vòng15s, warmup3s. Web không tắt vsync nên xuất false; RSS web không đo được thì null.
+- Leaderboard dùng API cùng server, file data/leaderboard.json (gitignore); export bằng node scripts/serve.mjs --export-leaderboard out.json.
+- Đổi phím phải kiểm tra trùng, lưu settings; chỉ báo hình ảnh không phụ thuộc âm thanh. Phát hành kèm LICENSE/CREDITS, README và ZIP/Docker.
+- Không tuyên bố benchmark/UI/video đạt khi chưa có kết quả thật; không sửa tag phase1/3 đã nộp.
+
 ## Phase 3 — luật hiện tại
 
 - Đọc docs/requirements/phase-3.md, CHANGELOG.md và docs/decisions/ADR-003-lantern-fuel.md. Ticket-03 thay các luật v1.1 được chỉ rõ.

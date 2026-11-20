@@ -1,5 +1,15 @@
 # Changelog
 
+## Phase 4 — Contract v1.3 / v1.0.0
+
+- Thêm bench_cmd và soak_cmd; benchmark200shade/100mote/3đèn/camera chuẩn, đo frame time thật; soak10đêm cùng tiến trình và RSS thật.
+- Giữ nguyên luật gameplay v1.2, thêm tùy chọn benchmark nội bộ không cho CLI scenario gameplay bật chế độ này.
+- Top10 leaderboard lưu đĩa, nhập tên sau thua/BìnhMinh, export bằng run_cmd.
+- Đổi9phím hành động, phát hiện trùng/khôi phục/lưu; giảm chuyển động, chữ lớn, chỉ báo hình ảnh.
+- Dùng instancing cho Bóng Mực trong cả game và benchmark; dispose khi reset.
+- Thêm LICENSE, Dockerfile, gói ZIP và xác nhận cài/test từ ZIP sạch.
+- Bản candidate chưa có số benchmark GPU hoặc MP4; không coi việc có tag/draftRelease là hoàn tất DoD.
+
 ## Phase 3 — Contract v1.2
 
 ### Thay đổi phá vỡ tương thích

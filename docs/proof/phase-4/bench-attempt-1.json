@@ -1,0 +1,17 @@
+{
+  "contract_version": "1.3",
+  "avg_fps": 21.966666666666665,
+  "p1_low_fps": 0.3688831272858014,
+  "frame_ms_p95": 16.900000000000546,
+  "frames": 659,
+  "load_ms": 2107.283935546875,
+  "peak_mem_mb": null,
+  "vsync_off": false,
+  "renderer": "Three.js r180 / WebGL2",
+  "os": "win32",
+  "memory_note": "Web page cannot measure process RSS; vsync is browser controlled.",
+  "resolution": [
+    1280,
+    720
+  ]
+}

@@ -1,0 +1,37 @@
+﻿[
+    {
+        "path":  "/",
+        "status":  200,
+        "type":  "text/html; charset=utf-8"
+    },
+    {
+        "path":  "/features.mjs",
+        "status":  200,
+        "type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/input.mjs",
+        "status":  200,
+        "type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/benchmark-core.mjs",
+        "status":  200,
+        "type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/index.mjs",
+        "status":  200,
+        "type":  "text/javascript; charset=utf-8"
+    },
+    {
+        "path":  "/phase4.css",
+        "status":  200,
+        "type":  "text/css; charset=utf-8"
+    },
+    {
+        "path":  "/api/leaderboard",
+        "status":  200,
+        "type":  "application/json; charset=utf-8"
+    }
+]

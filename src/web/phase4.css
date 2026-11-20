@@ -1,0 +1,23 @@
+:root{font-size:18px}
+body.large-text{--ui-scale:1.25}
+body{--ui-scale:1}
+body{font-size:calc(18px * var(--ui-scale))}
+.eyebrow,.controls,.map-key,.card .small,.stats .eyebrow,#cooldowns,#carry-panel,.score{font-size:calc(18px * var(--ui-scale))}
+.card p,.card button,.card label,.card input,.timer-panel strong,.stats strong,#prompt,#arrow,#toast{font-size:calc(18px * var(--ui-scale))}
+.top{inset:16px;grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);gap:10px}
+.stats{max-width:100%;gap:14px}.stats .eyebrow{letter-spacing:.02em}.brand h1{font-size:calc(24px * var(--ui-scale))}
+.controls{max-width:67vw;line-height:1.5;max-height:110px;overflow:auto}
+footer{inset:auto 16px 12px;gap:10px}.card{max-width:760px;max-height:92vh}
+#settings-panel label,#bindings label{display:flex;gap:16px;justify-content:space-between;align-items:center}
+#bindings{display:grid;grid-template-columns:1fr 1fr;gap:4px 20px}#bindings button{margin:0;padding:8px}
+fieldset{border:1px solid #f2c14e55;border-radius:10px;padding:14px;margin-top:16px}
+#score-form{margin-top:20px}#score-form input{padding:10px;width:190px}#score-form[hidden]{display:none}
+#visual-cues{position:absolute;left:16px;top:160px;max-width:340px;white-space:pre-line;color:#F5F1E6;background:#0e1430cc;padding:12px;border-radius:10px;font-size:calc(18px * var(--ui-scale));pointer-events:none}
+#visual-cues:empty{display:none}#spawn-cue{position:absolute;right:18px;top:48%;display:flex;gap:12px;padding:12px;background:#0e1430e0;color:#F2C14E;border:1px solid #F2C14E;border-radius:10px;pointer-events:none;font-size:calc(18px * var(--ui-scale))}
+#spawn-cue[hidden]{display:none}#spawn-arrow{display:inline-block}
+#leaderboard-rows table{border-collapse:collapse;width:100%;font-size:calc(18px * var(--ui-scale))}th,td{padding:8px;text-align:left;border-bottom:1px solid #f2c14e33}
+body.reduced-motion #hit{display:none}body.reduced-motion .urgent{animation:none}
+body.large-text .stats{flex-wrap:wrap}body.large-text .map-panel{top:190px}
+body.bench-mode #world{width:100vw;height:100vh}
+body.bench-mode .top,body.bench-mode .map-panel,body.bench-mode footer,body.bench-mode #carry-panel,body.bench-mode #arrow,body.bench-mode #prompt,body.bench-mode .overlay,body.bench-mode #visual-cues{display:none!important}
+@media(max-width:850px){.top{grid-template-columns:1fr auto}.timer-panel{grid-column:2}.stats{grid-column:1/-1;justify-self:stretch}.map-panel{top:260px}#bindings{grid-template-columns:1fr}#visual-cues{top:250px;max-width:50vw}#carry-panel{bottom:180px}footer{flex-wrap:wrap}}

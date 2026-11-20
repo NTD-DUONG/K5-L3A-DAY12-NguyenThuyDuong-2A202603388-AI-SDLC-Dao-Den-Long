@@ -1,5 +1,6 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Đảo Đèn Lồng · Ba Đêm</title><link rel="stylesheet" href="/style.css"></head><body>
 <link rel="stylesheet" href="/phase2.css">
+<link rel="stylesheet" href="/phase4.css">
 <main id="game"><canvas id="world" aria-label="Game 3D Đảo Đèn Lồng"></canvas>
 <header class="top"><div class="brand"><span class="eyebrow">ĐẢO ĐÈN LỒNG</span><h1 id="night-title">Ba đêm giữ lửa</h1><strong id="health">● ● ●</strong></div>
 <div class="timer-panel"><span class="eyebrow">BÌNH MINH</span><strong id="time">05:00</strong></div>
@@ -7,8 +8,22 @@
 <aside class="map-panel"><span class="eyebrow">BẢN ĐỒ ĐẢO</span><canvas id="map" width="180" height="180" aria-label="Bản đồ"></canvas><span class="map-key">Vàng · đèn | Tím · Bóng Mực</span></aside>
 <div id="toast" role="status" aria-live="polite"></div><div id="prompt"></div><div id="arrow" aria-label="Hướng đèn chưa sáng" hidden><span id="arrow-icon" aria-hidden="true">➤</span><span id="arrow-label"></span></div>
 <div id="carry-panel"><div id="mote-bar"></div><span id="carry">0 / 10</span><span id="charm"></span></div>
-<footer><div class="controls"><span><kbd>WASD</kbd> Di chuyển</span><span><kbd>Space</kbd> Nhảy</span><span><kbd>Shift</kbd> Lướt</span><span><kbd>E</kbd> Nạp đèn</span><span><kbd>Q</kbd> Tỏa sáng</span><span><kbd>← →</kbd> / kéo chuột · Camera</span><span><kbd>Esc / P</kbd> Dừng</span></div><div id="cooldowns"></div></footer>
+<footer><div class="controls" id="controls-hint"></div><div id="cooldowns"></div></footer>
 <section id="overlay" class="overlay"><div class="card"><span id="card-kicker" class="eyebrow">ĐẢO ĐÈN LỒNG</span><h2 id="card-title">Ba đêm giữ lửa.</h2><p id="card-body">Theo Mây đi qua ba đêm, gom đom đóm và thắp lại ánh sáng.</p><button id="start" disabled>Đang dựng đảo…</button><button id="restart" class="secondary" hidden>Chơi lại Đêm</button><button id="settings" class="secondary">Cài đặt</button><button id="menu" class="secondary" hidden>Về menu</button>
-<div id="settings-panel" hidden><label>Âm lượng <input id="volume" type="range" min="0" max="1" step=".05"></label><label>Độ nhạy chuột <input id="sensitivity" type="range" min=".2" max="3" step=".1"></label><label>Bảng màu dễ phân biệt <input id="colorblind" type="checkbox"></label><button id="benchmark" class="secondary">Đo FPS 1280×720 trong 30 giây</button></div><p class="small">Giữ ít nhất 60% đèn sáng tới bình minh · Thắp lại tốn 5 đom đóm</p></div></section>
+<button id="leaderboard" class="secondary">Bảng xếp hạng</button>
+<form id="score-form" hidden><label>Tên (3–12 chữ, số hoặc _) <input id="player-name" name="name" required pattern="[A-Za-z0-9_]{3,12}" minlength="3" maxlength="12" autocomplete="nickname"></label><button id="save-score" type="submit">Lưu điểm</button><p id="score-status" role="status"></p></form>
+<div id="settings-panel" hidden>
+<label>Âm lượng <input id="volume" type="range" min="0" max="1" step=".05"></label>
+<label>Độ nhạy chuột <input id="sensitivity" type="range" min=".2" max="3" step=".1"></label>
+<label>Bảng màu dễ phân biệt <input id="colorblind" type="checkbox"></label>
+<label>Giảm chuyển động <input id="reducedMotion" type="checkbox"></label>
+<label>Chữ lớn ×1,25 <input id="largeText" type="checkbox"></label>
+<fieldset><legend>Đổi phím — bấm vào phím rồi nhấn phím mới</legend><div id="bindings"></div><p id="binding-status" role="alert"></p><button id="restore-bindings" class="secondary" type="button">Khôi phục mặc định</button></fieldset>
+<button id="benchmark" class="secondary" type="button">Đo FPS chơi thường 1280×720</button>
+<button id="record-demo" class="secondary" type="button">Quay demo màn chơi (tối đa 4 phút 50 giây)</button>
+</div><p class="small">Giữ ít nhất 60% đèn sáng tới bình minh · Thắp lại tốn 5 đom đóm</p></div></section>
+<section id="leaderboard-panel" class="overlay" hidden><div class="card"><h2>Bảng xếp hạng</h2><div id="leaderboard-rows"></div><button id="close-leaderboard">Về menu</button></div></section>
+<div id="visual-cues" role="status" aria-live="polite"></div>
+<div id="spawn-cue" hidden><span id="spawn-arrow">➤</span><span>Bóng Mực xuất hiện</span></div>
 <div id="hit" aria-hidden="true"></div></main>
 <script type="module">import('/main.mjs').catch(e=>{document.querySelector('#card-title').textContent='Không mở được game';document.querySelector('#card-body').textContent=e.message;});</script></body></html>

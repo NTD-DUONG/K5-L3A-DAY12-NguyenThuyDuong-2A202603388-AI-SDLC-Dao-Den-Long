@@ -4,4 +4,9 @@ dist/
 .env.*
 !.env.example
 coverage/
+data/
+.tmp/
+artifacts/
+/bench.json
+/soak.json
 *.log

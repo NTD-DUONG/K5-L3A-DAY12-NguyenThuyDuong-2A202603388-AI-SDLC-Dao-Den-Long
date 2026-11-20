@@ -1,59 +1,111 @@
-# Đảo Đèn Lồng — Phase 3: Đèn cạn dầu
+# Đảo Đèn Lồng — v1.0.0 / Phase 4
 
-Bản web3D gồm3đêm, contract v1.2. Đã triển khai luật dầu và kiểm chứng tự động; chờ chơi thử giao diện sau thay luật trước khi chốt phase-3. Tag phase-1 giữ nguyên; minh chứng Phase2 là kết quả lịch sử, không chứng minh luật dầu mới.
+**Video demo:** chưa có file MP4 được quay và xác nhận. Game có nút quay màn hình trong Cài đặt; hướng dẫn ở bên dưới.
 
-## Cài và chạy
+Game 3D góc nhìn thứ ba: Mây gom đom đóm, châm dầu và giữ đảo sáng tới bình minh qua ba Đêm. Contract **v1.3**, giữ luật nhiên liệu Phase 3.
 
-Cần Node.js >=20, npm và trình duyệt desktop WebGL 2:
+![Ảnh chơi Đêm 1 do người học cung cấp trước cập nhật Phase 4](docs/proof/phase-2/web-playing.png)
+
+## Yêu cầu hệ thống
+
+- Node.js 20 trở lên, npm; Windows, macOS hoặc Linux.
+- Trình duyệt desktop hỗ trợ WebGL 2, bàn phím/chuột, tăng tốc GPU.
+- Cần Internet khi cài dependency; sau cài, game dùng Three.js cục bộ, không có CDN.
+- Benchmark cần Chromium/Chrome/Edge và GPU thật. Docker là phương án đóng gói bổ sung; máy hiện tại chưa có Docker để xác nhận build image.
+
+## Cài và chơi — 2 lệnh
+
+Sau khi clone repo hoặc giải nén ZIP phát hành, mở terminal trong thư mục dự án:
 
 ```sh
 npm ci
-npm run dev
+npm start
 ```
 
-Mở http://127.0.0.1:5173. Nếu server Phase 1 còn chạy, Ctrl+C rồi khởi động lại server và tải lại trang.
+Mở **http://127.0.0.1:5173**. Dừng server cũ trước khi khởi động bản mới. Settings lưu ở trình duyệt; bảng điểm lưu trên đĩa ở data/leaderboard.json.
 
-## Điều khiển
+Docker, nếu đã cài Docker:
 
-WASD di chuyển theo camera, Space nhảy, Shift lướt, E nạp đèn, Q tỏa sáng. Mũi tên trái/phải hoặc kéo chuột để xoay camera. Esc/P tạm dừng. Cài đặt cho phép chỉnh âm lượng/độ nhạy chuột và lưu bằng localStorage.
+```sh
+docker build -t dao-den-long .
+docker run --rm -p 5173:5173 -v lantern-data:/app/data dao-den-long
+```
 
-Menu → giới thiệu Đêm → chơi → kết quả → Đêm kế tiếp. Thua chơi lại chính Đêm đó. Thắng Đêm 3 hiện Bình Minh. Tổng điểm chỉ cộng các Đêm đã thắng.
+## Điều khiển và dễ tiếp cận
 
-## Luật chuẩn
+Mặc định: WASD di chuyển, Space nhảy, Shift trái lướt, E tương tác, Q tỏa sáng, Esc tạm dừng. Kéo chuột hoặc mũi tên trái/phải xoay camera.
 
-Sức chứa bắt đầu10, tăng2 mỗi lần thắp thành công (cả thắp lại), tối đa20. Thắp đầu cần10, thắp lại cần5. Đèn có100dầu, hao1/giây; mỗi đom đóm châm10dầu. Dưới30dầu mất safe và shade có thể hút5/giây/con. Đêm1/2/3 dài240/270/300s; cần3/5,4/6,5/7đèn sáng tại bình minh, còn sống. Không thắng sớm khi đủ đèn. Các luật di chuyển/dash/charm còn như Ticket-02.
+Trong **Cài đặt**: đổi từng phím, phát hiện trùng và khôi phục mặc định; âm lượng/độ nhạy, màu dễ phân biệt, giảm chuyển động và chữ lớn ×1,25. Các tùy chọn được lưu. Cỡ chữ UI mục tiêu tối thiểu18px ở1280×720. Chỉ báo hình ảnh cho shade xuất hiện, gió,10giây cuối và đèn ít dầu; không cần nghe âm thanh để nhận cảnh báo.
 
-Điểm: nạp/refuel+5 mỗi đom đóm; thắp đầu+100, thắp lại+40; pulse+5 mỗi shade hoặc tổng+15 nếu đang drain. Khi thắng: mỗi đèn sáng+50+floor(fuel), mỗi lửa+50; không thưởng thời gian. [Ticket-03](docs/requirements/phase-3.md), [ADR](docs/decisions/ADR-003-lantern-fuel.md), [changelog](CHANGELOG.md).
+## Luật và điểm
 
-Cài đặt có “Bảng màu dễ phân biệt” được lưu: mắt/viền shade xanh, UI nguy hiểm trắng kèm⚠. Đèn tắt xẹp20% và rách; thanh dầu/đèn dưới30 nhấp nháy1Hz.
+Đêm1/2/3 dài240/270/300giây. Cần còn sống và giữ ít nhất3/5,4/6,5/7đèn sáng tại bình minh; không thắng sớm. Đèn có100dầu, hao1/giây, dưới30 mất vùng an toàn và có thể bị shade hút5/giây/con.
 
-## Kiểm chứng
+Thắp mới cần10đom đóm, thắp lại5; mỗi đom đóm châm thêm10dầu. Sức chứa bắt đầu10, tăng2 mỗi lần thắp thành công, tối đa20. Điểm: nạp/châm+5/mote; thắp đầu+100, thắp lại+40; pulse+5/shade hoặc tổng+15 nếu đang drain. Khi thắng: mỗi đèn sáng+50+floor(fuel), mỗi lửa+50. Tổng chỉ cộng các Đêm đã thắng.
+
+## Bảng xếp hạng
+
+Sau thua bất kỳ Đêm nào hoặc sau Bình Minh Đêm3, nhập tên3–12ký tự A–Z/a–z/0–9/_ để lưu. Mục lưu đúng tổng điểm đã thắng, số đêm thắng, thời gian ISO có múi giờ và seed. Top10 sắp điểm giảm dần, hòa điểm thì đạt trước đứng trước. Mở từ nút Bảng xếp hạng trong menu.
+
+Xuất cùng dữ liệu mà game đang dùng:
+
+```sh
+node scripts/serve.mjs --export-leaderboard out.json
+```
+
+Có thể đặt LANTERN_DATA_DIR để đổi thư mục dữ liệu. Không commit dữ liệu bảng điểm cá nhân.
+
+## Kiểm chứng và headless
 
 ```sh
 npm run check
-npm run proof:phase3
-```
-
-check chạy regression và test tính năng mới; proof:phase3 tạo JSONL9scenario, so hai lần chạy và đo3đêm. Xem [bằng chứng](docs/proof/phase-3/checklist.md). Muốn tái lập v1.1 dùng commit561be77; không chạy script Phase2 trên v1.2.
-
-## Headless
-
-```sh
 node src/headless/cli.mjs --seed 123 --night 2 --ticks 1200 --out output.jsonl
 ```
 
---night nhận1/2/3. Thêm --scenario file.json --inputs file.json --snapshot-every 10 khi cần. CLI không dùng DOM/GPU. Lỗi JSON/schema trả2, lỗi CLI/I/O trả1, thành công trả0. Pause vẫn tăng tick nhưng dừng sim_tick. Trường snapshot motes.ttl_s là null với đom đóm thường (không hết hạn), là số giây với đom đóm rơi.
+Headless không cần cửa sổ/GPU; thêm --scenario, --inputs, --snapshot-every. Lỗi JSON/schema mã2, lỗi lệnh/I/O mã1, thành công mã0. Pause tăng tick, không tăng sim_tick. Các luật bị thay và lý do cập nhật test: [CHANGELOG](CHANGELOG.md), [ADR](docs/decisions/ADR-003-lantern-fuel.md).
 
-## Đo FPS
+## Benchmark chuẩn v1.3
 
-Vào Cài đặt, bấm **Đo FPS 1280×720 trong 30 giây**. Game bắt đầu lại Đêm đang chọn, buffer vẽ đặt1280×720, không pause/chuyển tab trong phép đo. File phase-2-fps.json tự tải về; lưu vào docs/proof/phase-2. Chỉ đánh dấu đạt nếu average_fps >=30. Chưa có số đo trình duyệt được xác nhận.
+```sh
+npm run bench -- --seed 42 --duration 30 --out bench.json
+```
 
-## Thiết kế và ghi chép
+Lệnh mở cửa sổ Chromium/Edge1280×720 (hoặc in URL nếu không tìm thấy trình duyệt; có thể đặt LANTERN_BROWSER). Cảnh đúng200shade wander,100mote,3đèn sáng100dầu, không nhặt/hit/hao/spawn/kết thúc; camera vòng30m/Y15,15giây/vòng. Bỏ3giây đầu, đo30giây và ghi report rồi kết thúc lệnh.
 
-src/core dùng chung giữa web/headless; terrain và night-maps mô tả đảo, cầu, tầng/dốc/bục nhảy. Renderer/audio/settings không tác động output headless. Màu chuẩn tại src/web/palette.mjs; ambient=0,15+0,55*lit/count.
+**Web không thể tắt vsync do trình duyệt quản lý:** vsync_off=false. Trang web không đo được RSS tiến trình nên peak_mem_mb=null, không dùng JS heap thay RSS. avg_fps,1%low và p95 tính từ dt khung thật; p95 dùng nearest-rank; phần giao tại biên khoảng đo được cắt theo cửa sổ đo chính xác. load_ms từ lúc tiến trình Node bắt đầu tới frame scene đầu tiên.
 
-Xem AGENTS.md, docs/notes/phase-2-ai-log.md, CREDITS.md. GUIDE.md, CHECKPOINTS.md, RULES.md, RUBRIC.md, SUBMISSION.md là hướng dẫn gốc. Video và Release v1.0.0 hoàn thiện ở Phase4.
+Ngưỡng trên máy chấm: avg_fps>=60, p1_low_fps>=30, load_ms<=10000. **Chưa có bench.json đo GPU được xác nhận trong môi trường công cụ; không coi unit test metric là kết quả benchmark đạt.**
 
-## Sáng tạo của tôi
+## Soak test
 
-Nhạc nền và hiệu ứng được tạo bằng Web Audio; nhân vật và bối cảnh dựng từ hình học. Không thêm thực thể làm đổi headless ngoài yêu cầu.
+```sh
+npm run soak -- --seed 7 --nights 10 --out soak.json
+```
+
+Một tiến trình,10Đêm xoay1→2→3, seed7+i với i=0…9. Đổi hướng mỗi30tick, input nhảy5%/dash3%/pulse2%/interact10% mỗi tick. RSS đo bằng process.memoryUsage().rss sau tải Đêm đầu và sau dọn/reset Đêm cuối; dùng --expose-gc để GC ranh giới reset. Xem [bằng chứng Phase4](docs/proof/phase-4/checklist.md). Tất cả lượt có thể thua; soak kiểm tra crash/bộ nhớ, không yêu cầu thắng.
+
+## Quay demo dưới 5 phút
+
+Cài đặt → **Quay demo màn chơi**, chọn màn hình/cửa sổ cần chia sẻ. Dừng từ thanh chia sẻ hoặc nút trong game. Tự dừng sau4phút50giây. Nếu trình duyệt hỗ trợ MediaRecorder MP4 sẽ tải demo.mp4; nếu chỉ hỗ trợ WebM, chuyển bằng FFmpeg:
+
+```sh
+ffmpeg -i demo.webm -t 290 -c:v libx264 -crf 24 -c:a aac demo.mp4
+```
+
+Quay chơi thật, kết quả test và benchmark; đính kèm MP4 vào Release v1.0.0 rồi thay dòng video đầu README bằng link thật. Không dùng ảnh tĩnh hoặc output chỉnh tay thay video.
+
+## Đóng gói và tình trạng phát hành
+
+```sh
+npm run package
+```
+
+Tạo artifacts/dao-den-long-v1.0.0.zip và SHA256. Gói gồm mã, lockfile, Dockerfile, giấy phép và tài liệu; không chứa .env, node_modules, .git hoặc dữ liệu bảng điểm. Sau giải nén cài/chạy bằng2lệnh ở trên.
+
+[Checklist phát hành](docs/proof/phase-4/checklist.md) phân biệt phần đã đo với mục còn chờ. Chưa xác nhận toàn bộ UI/benchmark/video trên trình duyệt vì browser access host unavailable. Không tuyên bố đạt mọi test ẩn.
+
+## Nguồn và ghi chép
+
+[LICENSE](LICENSE), [CREDITS](CREDITS.md), [harness](AGENTS.md), [retro](docs/notes/retro.md). Các ý hình học/âm thanh thủ tục không thêm thực thể sáng tạo trong headless; benchmark tắt các trang trí bổ sung. Cây/mây/chi tiết ngoài luật không thay output chấm.
+
+B?n ZIP Release ?? k?m Three.js v? gi?y ph?p: gi?i n?n, d?ng Node 24 ch?y `node scripts/serve.mjs`, m? http://127.0.0.1:5173. Kh?ng c?n t?i dependency ?? ch?i t? ZIP. Clone repo v?n d?ng hai l?nh npm ci v? npm start. B? ghi demo t? ??ng: `node scripts/demo.mjs --seed 12 --duration 75 --out artifacts/demo.mp4` (MP4 MediaRecorder tr?n Edge/Chrome).

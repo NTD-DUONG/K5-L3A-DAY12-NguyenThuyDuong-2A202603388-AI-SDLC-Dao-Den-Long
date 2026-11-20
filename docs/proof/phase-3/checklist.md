@@ -1,6 +1,6 @@
 # Minh chứng Phase 3 — Contract v1.2
 
-Trạng thái: đã triển khai code, 55/55 test đạt, 9 scenario chạy hai lần giống hệt. Chưa chơi/quan sát trực tiếp bản web sau thay luật. Không kết luận đạt test ẩn.
+Trạng thái:55/55test đạt,9scenario tất định; đã xem2ảnhPhase3 trong hội thoại và người học xác nhận các chức năng đều ổn ngày21/11/2026. AI chưa tự chơi trên trình duyệt. Xem [minh chứng tổng hợp](minh-chung.md); không kết luận đạt test ẩn.
 
 ## Kiểm tra lại theo yêu cầu chốt Phase 3
 
@@ -41,14 +41,17 @@ npm run proof:phase3
 | Tick cuối thắp lại | last-tick-relight.jsonl |
 | Pause giữ dầu | pause-fuel.jsonl |
 
-## Web cần người học kiểm chứng
+## Web — kết quả người học báo cáo
 
-- [ ] Nhìn thấy thanh dầu giảm; dưới30 đèn/bar nhấp nháy chậm1Hz.
-- [ ] Đèn hết dầu tắt, xẹp20% và có vết rách; E thắp lại chỉ cần5.
-- [ ] E ở đèn sáng châm dầu, trừ tài nguyên đúng; sức chứa HUD tăng khi thắp, không tăng khi refuel.
-- [ ] Giữ đủ60% đèn tới bình minh; đủ mọi đèn trước giờ không tự thắng.
-- [ ] Shade hút dầu tại đèn yếu, pulse hoặc châm>=30 đẩy/ngừng hút.
-- [ ] Bảng màu dễ phân biệt đổi mắt/viền xanh, nguy hiểm trắng kèm⚠; tải lại vẫn lưu; output headless không đổi.
+Các dấu đạt bên dưới dựa trên xác nhận chung “tôi thấy ok hết r”; không phải phép đo độc lập các giá trị1Hz,20%,RGB hoặc xác nhận riêng việc khôi phục cài đặt sau tải lại. Hai ảnh trong hội thoại chỉ cho thấy HUD trước/sau thắp đầu và thanh dầu. Xem chi tiết trong minh-chung.md.
+
+- [x] Thanh dầu và phản hồi đèn yếu hoạt động — người học xác nhận; chu kỳ1Hz đối chiếu mã, chưa đo riêng.
+- [x] Đèn tắt và thắp lại hoạt động — người học xác nhận; chi phí5 kiểm tra tự động, xẹp20%/vết rách đối chiếu mã.
+- [x] Châm dầu/sức chứa hoạt động — người học xác nhận; ảnh cho thấy0/12 và150điểm sau thắp đầu, refuel/giới hạn có test.
+- [x] Luật bình minh hoạt động — người học xác nhận; điều kiện đủ60%/không thắng sớm có test, chưa có ảnh kết thúc.
+- [x] Shade hút dầu và phản ứng pulse/châm hoạt động — người học xác nhận; ngưỡng chính xác có test.
+- [x] Bảng màu dễ phân biệt hoạt động — người học xác nhận chung; RGB và localStorage đối chiếu mã.
+- [ ] Xác nhận riêng cài đặt còn giữ sau tải lại và lưu ảnh chế độ dễ phân biệt.
 - [ ] Chụp ảnh/video bản mới, gồm màn bình minh/điểm và cài đặt.
 - [ ] Đo lại FPS nếu cần so hiệu năng sau đổi renderer; chưa có số đo Phase3.
 

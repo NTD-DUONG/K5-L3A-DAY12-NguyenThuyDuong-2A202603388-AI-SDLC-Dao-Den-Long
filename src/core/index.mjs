@@ -4,7 +4,7 @@ const eps=1e-9,near=(a,b,r)=>dist(a,b)<=r+eps;
 const round=n=>Math.round(n*1000)/1000,vec=p=>p.map(round);
 const direction=(a,b)=>{const d=dist(a,b);return d>eps?[(b[0]-a[0])/d,0,(b[2]-a[2])/d]:[1,0,0];};
 const compare=(a,b)=>a.id<b.id?-1:a.id>b.id?1:0;
-export function createGame(t,seed=1,s={},night=1){
+export function createGame(t,seed=1,s={},night=1,options={}){
  const map=createNightMap(night);let rng=seed>>>0,mid=1,sid=1,did=1;
  const random=()=>{rng=(Math.imul(rng,1664525)+1013904223)>>>0;return rng/4294967296;};
  const choose=a=>a[Math.floor(random()*a.length)];
@@ -54,6 +54,7 @@ export function createGame(t,seed=1,s={},night=1){
   for(let i=0;i<amount;i++){const a=random()*Math.PI*2,r=1.5+random();addMote([center[0]+Math.cos(a)*r,center[1],center[2]+Math.sin(a)*r],'dropped',480);}
  }
  function step(patch={}){
+  if(options.benchmark)patch={};
   if(g.state==='won'||g.state==='lost')return [];
   const previous=g.input;g.input={...previous,...patch};const input=g.input,press=k=>input[k]&&!previous[k];
   const events=[];g.tick++;const emit=(name,data={})=>events.push({type:'event',tick:g.tick,name,data});
@@ -61,9 +62,9 @@ export function createGame(t,seed=1,s={},night=1){
   if(g.state==='paused')return events;
   g.sim_tick++;const sim=g.sim_tick;
   if(sim===1)emit('night_start',{night});
-  g.time_left_s=Math.max(0,duration-sim/60);
+  g.time_left_s=options.benchmark?duration:Math.max(0,duration-sim/60);
   // All fuel arithmetic is in integer units of 1/60, before interaction/AI.
-  for(const l of g.lanterns)if(l.lit){
+  for(const l of g.lanterns)if(l.lit&&!options.benchmark){
    const drainers=g.shades.filter(sh=>sh.state==='drain'&&sh.target_lantern_id===l.id&&l.fuelUnits<t.low_fuel_threshold*60&&near(sh.pos,l.pos,2));
    l.fuelUnits=Math.max(0,l.fuelUnits-t.fuel_decay_per_s-drainers.length*t.drain_per_s);
    if(sim%60===0)for(const sh of drainers)emit('fuel_drain',{lantern_id:l.id,shade_id:sh.id,fuel:Math.round(l.fuelUnits/6)/10});
@@ -119,7 +120,7 @@ export function createGame(t,seed=1,s={},night=1){
     emit('player_hit',{by:'fall',flames:p.flames,dropped:0,lost});
    }
   }
-  if(!inactive){
+  if(!inactive&&!options.benchmark){
    g.motes=g.motes.filter(m=>{
     if(m.born<sim&&p.carried<p.capacity&&near(m.pos,p.pos,t.pickup_radius)&&Math.abs(m.pos[1]-p.pos[1])<=1.5+eps){p.carried++;emit('mote_picked',{carried:p.carried});return false;}return true;
    });
@@ -145,7 +146,7 @@ export function createGame(t,seed=1,s={},night=1){
   for(const shade of g.shades)if(safe(shade.pos)){
    shade.pos=outside(shade.pos);shade.safeEscape=sim; // immediate escape is within the 30 tick limit
   }
-  if(!inactive&&press('pulse')&&p.carried>=t.pulse_cost&&p.pulseCd===0){
+  if(!inactive&&!options.benchmark&&press('pulse')&&p.carried>=t.pulse_cost&&p.pulseCd===0){
    p.carried-=t.pulse_cost;p.pulseCd=180;const stunned_ids=[];
    const reaches=e=>Math.hypot(p.pos[0]-e.pos[0],p.pos[1]+.8-e.pos[1],p.pos[2]-e.pos[2])<=t.pulse_radius+eps;
    for(const shade of g.shades)if(reaches(shade)){
@@ -177,7 +178,7 @@ export function createGame(t,seed=1,s={},night=1){
     else continue;
    }
    if(shade.state==='chase'&&(d>18||inactive))shade.state='wander';
-   else if(shade.state==='wander'&&d<=12&&!inactive)shade.state='chase';
+   else if(shade.state==='wander'&&d<=12&&!inactive&&!options.benchmark)shade.state='chase';
    const angle=sim/180+(Number(shade.id.replace(/\D/g,''))||0);
    const weak=g.lanterns.filter(l=>l.lit&&l.fuelUnits<t.low_fuel_threshold*60);
    const targets=weak.length?weak:g.lanterns.filter(l=>!l.lit);
@@ -200,7 +201,7 @@ export function createGame(t,seed=1,s={},night=1){
     d.pos[0]+=dir[0]*(chase?7:2)*DT;d.pos[2]+=dir[2]*(chase?7:2)*DT;
    }
   }
-  if(!inactive){
+  if(!inactive&&!options.benchmark){
    for(const d of [...g.drifters].sort(compare))if(d.state==='chase'&&near(d.pos,p.pos,1.2)){
     const amount=Math.min(3,p.carried);p.carried-=amount;d.stolen=amount;d.state='flee';d.timer=240;d.dir=direction(p.pos,d.pos);emit('drifter_steal',{drifter_id:d.id,amount,carried:p.carried});
    }
@@ -213,21 +214,22 @@ export function createGame(t,seed=1,s={},night=1){
    }
   }
   g.drifters=g.drifters.filter(d=>d.state!=='removed');
-  if(s.random_motes!==false&&sim%240===0&&g.motes.length<30){
+  if(!options.benchmark&&s.random_motes!==false&&sim%240===0&&g.motes.length<30){
    const points=map.motePoints.filter(pt=>!g.motes.some(m=>dist(pt,m.pos)<.01&&Math.abs(pt[1]-m.pos[1])<.1));
    if(points.length)addMote(choose(points));
   }
   const schedule=map.shadeSchedule,first=300;
-  if(s.random_shades!==false&&(sim===first||(sim>first&&(sim-first)%schedule.intervalTicks===0))){
+  if(!options.benchmark&&s.random_shades!==false&&(sim===first||(sim>first&&(sim-first)%schedule.intervalTicks===0))){
    const count=sim===first?2:1;
    for(let i=0;i<count&&g.shades.length<schedule.max;i++){
     const points=map.shadePoints.filter(pt=>dist(pt,p.pos)>=15&&!safe(pt));
     if(points.length){const shade=makeShade({pos:choose(points),state:'spawning',state_ticks_left:30});shade.pos[1]+= .8;g.shades.push(shade);emit('shade_spawned',{id:shade.id});}
    }
   }
-  if(night>=2&&s.random_drifters!==false&&sim%1200===0&&g.drifters.length<2){
+  if(!options.benchmark&&night>=2&&s.random_drifters!==false&&sim%1200===0&&g.drifters.length<2){
    const pos=[...choose(map.shadePoints)];pos[1]+=.8;g.drifters.push(makeDrifter({pos}));
   }
+  if(options.benchmark)return events;
   let reason;
   if(p.flames<=0){g.state='lost';reason='no_flames';}
   else if(g.time_left_s<=0){

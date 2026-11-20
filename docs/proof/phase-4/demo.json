@@ -1,0 +1,11 @@
+{
+  "automatic": true,
+  "duration_s": 75,
+  "bytes": 13213823,
+  "mime": "video/mp4",
+  "seed": 12,
+  "description": "Real canvas recording with automatic inputs; silent; no manual play claimed",
+  "container_duration_s": 74.331,
+  "container": "MP4 (ftyp/moov/mvhd parsed)",
+  "visually_reviewed": false
+}
